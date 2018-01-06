@@ -1,13 +1,13 @@
 package main
 
 import (
-"bufio"
-"flag"
-"fmt"
-"net"
-"os"
-"strconv"
-"time"
+	"bufio"
+	"flag"
+	"fmt"
+	"net"
+	"os"
+	"strconv"
+	"time"
 )
 
 var addr = flag.String("addr", "", "The address to listen to; default is \"\" (all interfaces).")

@@ -1,5 +1,7 @@
 <canvas id="gc" width="400" height="400"></canvas>
 <script>
+    url = "ws:\\/\\/localhost:8080\\/time"
+    var ws = new WebSocket(url);
     window.onload=function() {
         canv=document.getElementById("gc");
         ctx=canv.getContext("2d");
@@ -44,6 +46,9 @@
 
         if(ax==px && ay==py) {
             tail++;
+            ws.onopen = function () {
+                ws.send('echo'); // Send the message 'Ping' to the server
+            };
             ax=Math.floor(Math.random()*tc);
             ay=Math.floor(Math.random()*tc);
         }

@@ -9,9 +9,13 @@ import (
 	"bufio"
 	"time"
 	"regexp"
+	"github.com/gorilla/websocket"
+	"net/http"
+	"log"
 )
 
 var host = flag.String("host", "localhost", "The hostname or IP to connect to; defaults to \"localhost\".")
+var serverType = flag.String("server-type", "websocket", "The tyoe of messaging system on the client side")
 var port = flag.Int("port", 8000, "The port to connect to; defaults to 8000.")
 
 func main() {
@@ -20,8 +24,9 @@ func main() {
 	dest := *host + ":" + strconv.Itoa(*port)
 	fmt.Printf("Connecting to %s...\n", dest)
 
-	conn, err := net.Dial("tcp", dest)
+	go listenToClient()
 
+	conn, err := net.Dial("tcp", dest)
 	if err != nil {
 		if _, t := err.(*net.OpError); t {
 			fmt.Println("Some problem connecting.")
@@ -30,7 +35,6 @@ func main() {
 		}
 		os.Exit(1)
 	}
-
 	go readConnection(conn)
 
 	for {
@@ -46,6 +50,39 @@ func main() {
 		}
 	}
 }
+
+
+func listenToClient(){
+	var addr = flag.String("addr", "localhost:8080", "http service address")
+	fmt.Println("Listening via websockets on port")
+	http.HandleFunc("/time", echo)
+	log.Fatal(http.ListenAndServe(*addr, nil))
+}
+
+var upgrader = websocket.Upgrader{}
+
+func echo(w http.ResponseWriter, r *http.Request) {
+	c, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Print("upgrade:", err)
+		return
+	}
+	defer c.Close()
+	for {
+		mt, message, err := c.ReadMessage()
+		if err != nil {
+			log.Println("read:", err)
+			break
+		}
+		log.Printf("recv: %s", message)
+		err = c.WriteMessage(mt, message)
+		if err != nil {
+			log.Println("write:", err)
+			break
+		}
+	}
+}
+
 
 func readConnection(conn net.Conn) {
 	for {
