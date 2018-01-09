@@ -5,10 +5,10 @@ import (
 )
 
 type MessagingService struct{
-	Repo *medium.Channeler
+	Repo medium.Channeler
 }
 
-func NewMessagingService( Repo *medium.Channeler ) *MessagingService{
+func NewMessagingService( Repo medium.Channeler ) *MessagingService{
 	return &MessagingService{ Repo: Repo}
 }
 
