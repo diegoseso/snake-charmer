@@ -17,6 +17,7 @@ import (
 var host = flag.String("host", "localhost", "The hostname or IP to connect to; defaults to \"localhost\".")
 var serverType = flag.String("server-type", "websocket", "The tyoe of messaging system on the client side")
 var port = flag.Int("port", 8000, "The port to connect to; defaults to 8000.")
+var addr = flag.String("addr", "localhost:8080", "http service address")
 
 func main() {
 	flag.Parse()
@@ -39,7 +40,7 @@ func main() {
 
 	for {
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("> ")
+		//fmt.Print("> ")
 		text, _ := reader.ReadString('\n')
 
 		conn.SetWriteDeadline(time.Now().Add(1 * time.Second))
@@ -53,15 +54,16 @@ func main() {
 
 
 func listenToClient(){
-	var addr = flag.String("addr", "localhost:8080", "http service address")
-	fmt.Println("Listening via websockets on port")
-	http.HandleFunc("/time", echo)
+	fmt.Println("WebSocket Server up")
+	http.HandleFunc("/time", handler)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
 
-var upgrader = websocket.Upgrader{}
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool { return true },
+}
 
-func echo(w http.ResponseWriter, r *http.Request) {
+func handler(w http.ResponseWriter, r *http.Request) {
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Print("upgrade:", err)
@@ -71,13 +73,13 @@ func echo(w http.ResponseWriter, r *http.Request) {
 	for {
 		mt, message, err := c.ReadMessage()
 		if err != nil {
-			log.Println("read:", err)
+			fmt.Println("read:", err)
 			break
 		}
-		log.Printf("recv: %s", message)
+		fmt.Printf("recv: %s", message)
 		err = c.WriteMessage(mt, message)
 		if err != nil {
-			log.Println("write:", err)
+			fmt.Println("write:", err)
 			break
 		}
 	}
