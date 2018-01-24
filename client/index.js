@@ -19,7 +19,7 @@ var velocitySpeed = 200;
 
 
 function preload () {
-  game.load.image('snake', '/snake.png');
+  game.load.image('snake', '/images/head.png');
   game.load.image('snakePoop', '/snake-red.png');
   game.load.image('food', '/mushroom.png');
   game.load.audio('coin', './coin.mp3');
@@ -30,6 +30,7 @@ function create () {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   snake = game.add.sprite(100, 100, 'snake');
   snake.enableBody = true;
+  snake.scale.setTo(0.3, 0.3);
   coinSound = game.add.audio('coin');
   cheeringSound = game.add.audio('cheering');
   var y = game.world.randomY;
