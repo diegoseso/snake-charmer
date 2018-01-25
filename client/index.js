@@ -20,7 +20,7 @@ var velocitySpeed = 200;
 
 function preload () {
   game.load.image('snake', '/images/head.png');
-  game.load.image('snakePoop', '/snake-red.png');
+  game.load.image('snakePoop', '/images/poison.png');
   game.load.image('food', '/mushroom.png');
   game.load.audio('coin', './coin.mp3');
   game.load.audio('cheering', './cheering.mp3');
@@ -30,7 +30,7 @@ function create () {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   snake = game.add.sprite(100, 100, 'snake');
   snake.enableBody = true;
-  snake.scale.setTo(0.3, 0.3);
+  snake.scale.setTo(0.03, 0.03);
   coinSound = game.add.audio('coin');
   cheeringSound = game.add.audio('cheering');
   var y = game.world.randomY;
@@ -94,7 +94,6 @@ function update () {
     }
   }
 
-
   for (var i = 0; i < snakePoop.length; i++) {
     game.physics.arcade.collide(snake, snakePoop[i], poopCollisionHandler, null, this)
   }
@@ -143,8 +142,10 @@ function addTail(context) {
   if (snake.body.velocity.y < 0) {
     spawnOffsetY = 20
   }
-
-  snakePoop.push(game.add.sprite(snake.x + spawnOffsetX, snake.y + spawnOffsetY, 'snakePoop'));
+  
+  poop = game.add.sprite(snake.x + spawnOffsetX, snake.y + spawnOffsetY, 'snakePoop');
+  
+  snakePoop.push(poop);
   this.snakeTail = snakePoop[snakePoop.length - 1]
   this.snakeTail.scale.x = 0
   this.snakeTail.scale.y = 0
