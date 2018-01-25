@@ -21,7 +21,7 @@ var velocitySpeed = 200;
 function preload () {
   game.load.image('snake', '/images/head.png');
   game.load.image('snakePoop', '/images/poison.png');
-  game.load.image('food', '/mushroom.png');
+  game.load.image('food', '/images/coin_front.png');
   game.load.audio('coin', './coin.mp3');
   game.load.audio('cheering', './cheering.mp3');
 }
