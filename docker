@@ -1,0 +1,1 @@
+docker run -dit -p 8001:80 -v /home/diegoseso/projects/snake-charmer:/var/www/html nginx
