@@ -1,3 +1,7 @@
 var GameState = {
-    create: function(){}
+    init: function(){
+   },
+    create: function(){
+
+    }
 }

@@ -9,7 +9,13 @@ var HomeState = {
 
         background.events.onInputDown.add(function(){
             this.state.start('GameState');
+            introLoop.stop();
         }, this);
+
+        introLoop = self.game.add.audio('intro_loop');
+        introLoop.loop = true;
+        introLoop.play();
+
 
         var style = {font: '35px Arial', fill: '#fff'};
         this.game.add.text(30, this.game.world.centerY + 200, 'TOUCH TO START', style);
