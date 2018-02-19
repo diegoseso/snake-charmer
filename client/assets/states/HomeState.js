@@ -8,8 +8,8 @@ var HomeState = {
         background.inputEnabled = true;
 
         background.events.onInputDown.add(function(){
-            this.state.start('GameState');
             introLoop.stop();
+            this.state.start('GameState');
         }, this);
 
         introLoop = self.game.add.audio('intro_loop');
