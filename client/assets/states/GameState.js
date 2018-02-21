@@ -145,18 +145,26 @@ var GameState = {
             if (cursors.left.isDown) {
                 snake.body.velocity.x = -velocitySpeed;
                 snake.body.velocity.y = 0;
+                snake.anchor.setTo(0.5);
+                snake.angle = -180
             }
             else if (cursors.right.isDown) {
                 snake.body.velocity.x = velocitySpeed;
                 snake.body.velocity.y = 0;
+                snake.anchor.setTo(0.5);
+                snake.angle = 0
             }
             if (cursors.up.isDown) {
                 snake.body.velocity.x = 0;
                 snake.body.velocity.y = -velocitySpeed;
+                snake.anchor.setTo(0.5);
+                snake.angle = -90
             }
             else if (cursors.down.isDown) {
                 snake.body.velocity.x = 0;
                 snake.body.velocity.y = velocitySpeed;
+                snake.anchor.setTo(0.5);
+                snake.angle = 90
             }
         }
 
