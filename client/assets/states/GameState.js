@@ -1,4 +1,4 @@
-var snake, food, cursors, score = 0;
+var snake, snakeBody, winText, snakeTail, food, cursors, score = 0;
 var gameWidth = 360
 var gameHeight = 640
 var snakePoop = [];
@@ -6,7 +6,6 @@ var gameOver = false;
 var velocitySpeed = 200;
 
 function addTail(context) {
-    coinSound.play()
     this.score++
     console.log("x:" + snake.body.velocity.x);
     console.log("y:" + snake.body.velocity.y);
@@ -67,7 +66,6 @@ function foodCollisionHandler() {
 function poopCollisionHandler() {
     stateText.visible = true;
     food.destroy();
-    //ga('send', 'event', "Game", "HightScore", "GameOver", score);
 }
 
 var GameState = {
@@ -76,11 +74,18 @@ var GameState = {
     create: function () {
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
-        snake = this.add.sprite(100, 100, 'snake');
-        snake.enableBody = true;
+        snake = this.add.sprite(140, 40, 'snake');
         snake.scale.setTo(0.03, 0.03);
-        coinSound = this.add.audio('coin');
-        cheeringSound = this.add.audio('cheering');
+
+        snakeBody = this.make.sprite(-850,  0, 'snake_body');
+
+        snakeTail = this.make.sprite(-2000, 0, 'snake_tail');
+        snakeTail.anchor.setTo(0.5)
+
+        snake.addChild(snakeTail);
+        snake.anchor.setTo(0.5);
+        snake.enableBody = true;
+
         var y = this.world.randomY;
         var x = this.world.randomX;
         if (x < 40) {
@@ -104,22 +109,22 @@ var GameState = {
         cursors = this.input.keyboard.createCursorKeys();
 
         function snakeOut(snake) {
-            if (snake.x > 600) {
+            if (snake.x > 360) {
                 snake.reset(0, snake.y);
                 snake.body.velocity.x = velocitySpeed;
             }
             if (snake.x < 0) {
-                snake.reset(580, snake.y);
+                snake.reset(360, snake.y);
                 snake.body.velocity.x = -velocitySpeed;
             }
 
-            if (snake.y > 400) {
+            if (snake.y > 640) {
                 snake.reset(snake.x, 0);
                 snake.body.velocity.y = velocitySpeed;
             }
 
             if (snake.y < 0) {
-                snake.reset(snake.x, 380);
+                snake.reset(snake.x, 640);
                 snake.body.velocity.y = -velocitySpeed;
             }
 
@@ -128,9 +133,15 @@ var GameState = {
         snake.checkWorldBounds = true;
         snake.events.onOutOfBounds.add(snakeOut, this);
 
-        stateText = this.add.text(this.world.centerX,this.world.centerY,'Game Over!', { font: '84px Arial', fill: '#fff' });
-        stateText.anchor.setTo(0.5, 0.5);
+        stateText = this.add.sprite(this.world.centerX ,this.world.centerY, 'game_over');
+        stateText.anchor.setTo(0.5);
+        stateText.scale.setTo(0.3, 0.3);
         stateText.visible = false;
+
+        winText = this.add.sprite(this.world.centerX ,this.world.centerY, 'you_win');
+        winText.anchor.setTo(0.5);
+        winText.scale.setTo(0.3, 0.3);
+        winText.visible = false;
 
         scoreText = this.add.text(this.world.centerX,this.world.centerY,'Score: ' + score, { font: '22px Arial', fill: '#fff' });
         scoreText.x = 0;
@@ -141,23 +152,25 @@ var GameState = {
         scoreText.text = 'Score: ' + score
         this.physics.arcade.collide(snake, food, foodCollisionHandler, null, this);
 
+        if( score > 5){
+            winText.visible = true;
+            game.paused = true;
+        }
+
         if (!this.gameOver) {
             if (cursors.left.isDown) {
                 snake.body.velocity.x = -velocitySpeed;
                 snake.body.velocity.y = 0;
-                snake.anchor.setTo(0.5);
                 snake.angle = -180
             }
             else if (cursors.right.isDown) {
                 snake.body.velocity.x = velocitySpeed;
                 snake.body.velocity.y = 0;
-                snake.anchor.setTo(0.5);
                 snake.angle = 0
             }
             if (cursors.up.isDown) {
                 snake.body.velocity.x = 0;
                 snake.body.velocity.y = -velocitySpeed;
-                snake.anchor.setTo(0.5);
                 snake.angle = -90
             }
             else if (cursors.down.isDown) {
