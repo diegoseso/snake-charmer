@@ -16,6 +16,11 @@ var HomeState = {
             this.state.start('GameState');
         }, this);
 
+        game.input.onTap.add(function(){
+            introLoop.stop();
+            this.state.start('GameState');
+        }, this);
+
         introLoop = self.game.add.audio('intro_loop');
         introLoop.loop = true;
         introLoop.play();

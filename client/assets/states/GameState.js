@@ -1,4 +1,4 @@
-var snake, snakeBody, winText, snakeTail, food, cursors, score = 0;
+var snake, snakeBody, winText, snakeTail, food, cursors, pointers, score = 0;
 var gameWidth = 360
 var gameHeight = 640
 var snakePoop = [];
@@ -106,6 +106,7 @@ var GameState = {
         this.physics.arcade.enable(snake);
         this.physics.arcade.enable(food);
         this.physics.arcade.enable(snakePoop);
+
         cursors = this.input.keyboard.createCursorKeys();
 
         function snakeOut(snake) {
