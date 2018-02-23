@@ -1,8 +1,8 @@
 var BootState = {
    init: function(){
            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-           this.scale.maxHeight = 640;
-           this.scale.maxWidth = 360;
+           this.scale.maxHeight = 1280;
+           this.scale.maxWidth = 720;
            this.scale.pageAlignHorizontally = true;
            this.scale.pageAlignVertically = true;
        },
