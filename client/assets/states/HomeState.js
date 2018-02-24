@@ -5,7 +5,7 @@ var HomeState = {
 
     create: function() {
         var background = this.game.add.sprite(this.game.world.centerX,this.game.world.centerY,'logo_no_background');
-        background.scale.setTo(0.2, 0.2)
+        //background.scale.setTo(0.2, 0.2)
         background.anchor.setTo(0.5)
         background.inputEnabled = true;
 

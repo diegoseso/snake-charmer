@@ -7,7 +7,7 @@ var BootState = {
            this.scale.pageAlignVertically = true;
        },
    preload: function(){
-       this.load.image('logo_no_background', 'images/cover_no_background.png');
+       this.load.image('logo_no_background', 'images/cover_no_background_1280.png');
        this.load.image('logo', 'images/cover_360_640.png');
        this.load.audio('intro_loop', ['assets/audio/intro_loop_arab.ogg','assets/audio/intro_loop_arab.mp3']);
        this.load.image('snake', 'images/head.png');
