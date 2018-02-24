@@ -4,6 +4,8 @@ var gameHeight = 1280
 var snakePoop = [];
 var gameOver = false;
 var velocitySpeed = 400;
+var tapSquare = 200;
+var tapAction;
 
 function addTail(context) {
     this.score++
@@ -113,6 +115,28 @@ var GameState = {
 
         cursors = this.input.keyboard.createCursorKeys();
 
+        this.input.onTap.add(translateTap, this);
+
+        function translateTap(pointer, doubleTap){
+            if (pointer.x < gameWidth/2 && pointer.y > tapSquare && pointer.y < gameHeight - tapSquare ){
+                tapAction = "LEFT";
+                console.log("We are going left");
+            }
+            if (pointer.x >= gameWidth/2 && pointer.y > tapSquare && pointer.y < gameHeight - tapSquare){
+                tapAction = "RIGHT";
+                console.log("We are going right");
+            }
+            if (pointer.y < gameHeight/2 && pointer.x > tapSquare && pointer.x < gameWidth - tapSquare){
+                tapAction = "UP";
+                console.log("We are going up");
+            }
+            if (pointer.y >= gameHeight/2 && pointer.x > tapSquare && pointer.x < gameWidth - tapSquare){
+                tapAction = "DOWN";
+                console.log("We are going down");
+            }
+        }
+
+
         function snakeOut(snake) {
             if (snake.x > gameWidth) {
                 snake.reset(0, snake.y);
@@ -150,22 +174,22 @@ var GameState = {
         }
 
         if (!this.gameOver) {
-            if (cursors.left.isDown) {
+            if (cursors.left.isDown || tapAction == "LEFT") {
                 snake.body.velocity.x = -velocitySpeed;
                 snake.body.velocity.y = 0;
                 snake.angle = -180
             }
-            else if (cursors.right.isDown) {
+            else if (cursors.right.isDown || tapAction == "RIGHT") {
                 snake.body.velocity.x = velocitySpeed;
                 snake.body.velocity.y = 0;
                 snake.angle = 0
             }
-            if (cursors.up.isDown) {
+            if (cursors.up.isDown || tapAction == "UP") {
                 snake.body.velocity.x = 0;
                 snake.body.velocity.y = -velocitySpeed;
                 snake.angle = -90
             }
-            else if (cursors.down.isDown) {
+            else if (cursors.down.isDown || tapAction == "DOWN") {
                 snake.body.velocity.x = 0;
                 snake.body.velocity.y = velocitySpeed;
                 snake.anchor.setTo(0.5);
