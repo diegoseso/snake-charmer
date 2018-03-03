@@ -6,15 +6,8 @@ var SelectorState = {
         var self = this;
 
         customParams.snakeList.forEach(function(element){
-            self.snakes.create(self.game.world.centerX, self.game.world.centerY+1100 , element);
+            self.snakes.create(-1000, self.game.world.centerY+1100 , element);
         });
-        self.snakes.inputEnableChildren = true;
-        //      self.snakes.forEach(function(snake){
-    //        snake.inputEnabled = true;
-      //  }, this);
-
-//        console.log(self.snakes)
-
         self.snakes.scale.setTo(0.3, 0.3);
 
         this.leftArrow = this.game.add.sprite(100, this.game.world.centerY, 'arrow');
@@ -41,19 +34,7 @@ var SelectorState = {
         this.currentSnake = this.snakes.next();
 
         console.log(this.currentSnake);
-        this.currentSnake.position.set(this.game.world.centerX, this.game.world.centerY+1100);
-
-        /*
-        background.events.onInputDown.add(function(){
-            introLoop.stop();
-            this.state.start('GameState');
-        }, this);
-
-        game.input.onTap.add(function(){
-            introLoop.stop();
-            this.state.start('GameState');
-        }, this);
-        */
+        this.currentSnake.position.set(this.game.world.centerX+400, this.game.world.centerY+1100);
     },
     update: function() {
     },
