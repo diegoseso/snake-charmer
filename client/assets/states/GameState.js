@@ -74,7 +74,7 @@ var GameState = {
         snakeTail = this.make.sprite(-2000, 0, 'snake_tail');
         snakeTail.anchor.setTo(0.5)
         snakeBody = this.make.sprite(-850,  0, 'snake_body');
-        snake = this.add.sprite(140, 40, 'snake');
+        snake = this.add.sprite(140, 40, customParams.snake);
         snake.scale.setTo(0.08, 0.08);
         snake.addChild(snakeTail);
         snake.anchor.setTo(0.5);

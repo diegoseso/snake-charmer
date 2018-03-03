@@ -17,6 +17,11 @@ var BootState = {
        this.load.image('food', 'images/coin_front.png');
        this.load.image('game_over', 'images/game_over.png');
        this.load.image('you_win', 'images/you_win.png');
+
+       this.load.image('coral_head', 'images/coral_head.png');
+       this.load.image('purple_head', 'images/purple_head.png');
+       this.load.image('yellow_head', 'images/head.png');
+       this.load.image('arrow', 'images/arrow.png');
    },
    create: function(){
        this.state.start('PreloadState');
