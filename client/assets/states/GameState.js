@@ -7,6 +7,22 @@ var velocitySpeed = 400;
 var tapSquare = 200;
 var tapAction;
 
+
+function customRestart() {
+    snake = {};
+    snakeBody = {};
+    winText = {};
+    snakeTail = {};
+    snakePoop = [];
+    velocitySpeed = 400;
+    tapAction = {};
+    food = {};
+    cursors = {};
+    pointers = {};
+    score = 0;
+    game.state.restart('GameState');
+}
+
 function addTail(context) {
     this.score++
 
@@ -62,6 +78,7 @@ function foodCollisionHandler() {
 function poopCollisionHandler() {
     stateText.visible = true;
     food.destroy();
+    button = game.add.button(game.world.centerX -250, 850, 'play_again', customRestart, this, 2, 1, 0);
 }
 
 var GameState = {
@@ -82,14 +99,17 @@ var GameState = {
         food = this.add.sprite(x, y, 'food');
         food.enableBody = true;
         food.scale.setTo(0.06, 0.06);
+
         stateText = this.add.sprite(this.world.centerX ,this.world.centerY, 'game_over');
         stateText.anchor.setTo(0.5);
         stateText.scale.setTo(0.6, 0.6);
         stateText.visible = false;
+
         winText = this.add.sprite(this.world.centerX ,this.world.centerY, 'you_win');
         winText.anchor.setTo(0.5);
         winText.scale.setTo(0.6, 0.6);
         winText.visible = false;
+
         scoreText = this.add.text(this.world.centerX,this.world.centerY,'Score: ' + score, { font: '36px Arial', fill: '#fff' });
         scoreText.x = 0;
         scoreText.y = 0;
